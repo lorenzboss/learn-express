@@ -1,5 +1,5 @@
 import express from "express";
-import usersRouter from "./routes/userRoutes.js";
+import testRouter from "./routes/testRouter.js";
 
 const app = express();
 const port = 3000;
@@ -10,7 +10,7 @@ app.get("/helloworld", (req, res) => {
   res.send("Hello World");
 });
 
-app.use("/api/users", usersRouter);
+app.use("/api/test", testRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
