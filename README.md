@@ -13,7 +13,7 @@ Visit [http://localhost:3000](http://localhost:3000).
 
 # Get User Data from Express
 
-## Body (POST)
+## Body (POST)
 
 ```javascript
 router.post("/user", (req, res) => {
@@ -22,7 +22,7 @@ router.post("/user", (req, res) => {
 });
 ```
 
-## Query (/api/user?name=lorenz)
+## Query (/api/user?name=lorenz)
 
 ```javascript
 router.get("/user", (req, res) => {
@@ -31,7 +31,7 @@ router.get("/user", (req, res) => {
 });
 ```
 
-## Params (/api/user/lorenz)
+## Params (/api/user/lorenz)
 
 ```javascript
 router.get("/user/:name", (req, res) => {
