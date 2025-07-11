@@ -1,13 +1,17 @@
 import express from "express";
 import users from "../data/users.js";
+import { executeQuery } from "../db.js";
 
 const router = express.Router();
 
 let data = users;
 
 // GET /api/users
-router.get("/", (req, res) => {
-  res.json(data);
+router.get("/", async (req, res) => {
+  const rows = await executeQuery("SELECT * FROM users");
+  console.log(rows);
+
+  res.json({ data, rows });
 });
 
 // POST /api/users
