@@ -1,40 +1,49 @@
 import express from "express";
-import users from "../data/users.js";
+import seed from "../data/users.js";
 import { executeQuery } from "../db.js";
 
 const router = express.Router();
 
-let data = users;
-
 // GET /api/users
 router.get("/", async (req, res) => {
-  const rows = await executeQuery("SELECT * FROM users");
-  console.log(rows);
+  const rows = await executeQuery("SELECT * FROM users ORDER BY id");
 
-  res.json({ data, rows });
+  res.json(rows);
 });
 
 // POST /api/users
-router.post("/", (req, res) => {
-  data.push(req.body);
-  res.json(req.body);
+router.post("/", async (req, res) => {
+  const rows = await executeQuery(
+    "INSERT INTO users (firstname, lastname, address, age, email) VALUES ($1, $2, $3, $4, $5)",
+    [
+      req.body.firstname,
+      req.body.lastname,
+      req.body.address,
+      req.body.age,
+      req.body.email,
+    ]
+  );
+
+  res.json(rows);
 });
 
 // DELETE /api/users/:id
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const id = req.params.id;
 
-  if (isNaN(id) || id > data.length - 1) {
+  if (isNaN(id)) {
     res.status(400);
     res.json({ error: "Invalid ID!" });
   }
 
-  const deletedRecord = data[id];
+  const deletedRecord = await executeQuery(
+    "SELECT * FROM users WHERE id = $1",
+    [id]
+  );
 
-  data.splice(id, 1);
+  await executeQuery("DELETE FROM users WHERE id = $1", [id]);
   res.json({
     deletedRecord,
-    newDataset: data,
   });
 });
 
