@@ -47,4 +47,15 @@ router.delete("/:id", async (req, res) => {
   });
 });
 
+// POST /api/users/seed
+router.post("/seed", async (req, res) => {
+  for (const user of seed) {
+    await executeQuery(
+      "INSERT INTO users (firstname, lastname, address, age, email) VALUES ($1, $2, $3, $4, $5)",
+      [user.firstname, user.lastname, user.address, user.age, user.email]
+    );
+  }
+  res.json(seed);
+});
+
 export default router;
