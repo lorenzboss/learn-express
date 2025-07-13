@@ -11,7 +11,7 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000).
 
-# Get User Data from Express
+# Extracting Request Data in Express
 
 ## Body (POST)
 
