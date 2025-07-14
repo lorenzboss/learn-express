@@ -2,11 +2,17 @@
 
 A simple project to learn Express.
 
-## Usage
+## Usage (For Developing)
 
 ```bash
 npm install
 npm run dev
+```
+## For deploying
+
+```bash
+npm install
+npm run start
 ```
 
 Visit [http://localhost:3000](http://localhost:3000).
