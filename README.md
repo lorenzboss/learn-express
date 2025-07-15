@@ -1,6 +1,6 @@
 # Learn Express
 
-A simple project to learn Express.
+A basic Express project for learning purposes.
 
 ## Usage (For Developing)
 
