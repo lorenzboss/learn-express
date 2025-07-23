@@ -83,10 +83,13 @@ router.delete("/:id", async (req, res) => {
     [id]
   );
 
+  if (deletedRecord.length == 0) {
+    res.status(400);
+    res.json({ error: "This id does not exist!" });
+  }
+
   await executeQuery("DELETE FROM users WHERE id = $1", [id]);
-  res.json({
-    deletedRecord,
-  });
+  res.json({ deletedUser: deletedRecord[0] });
 });
 
 // POST /api/users/seed
