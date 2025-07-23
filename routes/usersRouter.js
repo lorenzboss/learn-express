@@ -35,6 +35,40 @@ router.post("/", async (req, res) => {
   res.json(rows);
 });
 
+// PUT /api/users/:id
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  if (isNaN(id)) {
+    res.status(400);
+    res.json({ error: "Invalid ID!" });
+    return;
+  }
+
+  const oldUser = await executeQuery("SELECT * FROM users where id = $1", [id]);
+
+  if (oldUser.length == 0) {
+    res.status(400);
+    res.json({ error: "This id does not exist!" });
+  }
+
+  await executeQuery(
+    "UPDATE users SET firstname = $1, lastname = $2, address = $3, age = $4, email = $5 WHERE id = $6",
+    [
+      req.body.firstname,
+      req.body.lastname,
+      req.body.address,
+      req.body.age,
+      req.body.email,
+      id,
+    ]
+  );
+
+  const newUser = await executeQuery("SELECT * FROM users where id = $1", [id]);
+
+  res.json({ oldUser, newUser });
+});
+
 // DELETE /api/users/:id
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
