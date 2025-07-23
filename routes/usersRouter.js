@@ -11,6 +11,14 @@ router.get("/", async (req, res) => {
   res.json(rows);
 });
 
+// GET /api/users/:id
+router.get("/:id", async (req, res) => {
+  const user = await executeQuery("Select * from users where id = $1", [
+    req.params.id,
+  ]);
+  res.json(user[0]);
+});
+
 // POST /api/users
 router.post("/", async (req, res) => {
   const rows = await executeQuery(
