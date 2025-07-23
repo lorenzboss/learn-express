@@ -40,16 +40,15 @@ router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
   if (isNaN(id)) {
-    res.status(400);
-    res.json({ error: "Invalid ID!" });
+    res.status(400).json({ error: "Invalid ID!" });
     return;
   }
 
   const oldUser = await executeQuery("SELECT * FROM users where id = $1", [id]);
 
   if (oldUser.length == 0) {
-    res.status(400);
-    res.json({ error: "This id does not exist!" });
+    res.status(400).json({ error: "This id does not exist!" });
+    return;
   }
 
   await executeQuery(
@@ -74,8 +73,8 @@ router.delete("/:id", async (req, res) => {
   const id = req.params.id;
 
   if (isNaN(id)) {
-    res.status(400);
-    res.json({ error: "Invalid ID!" });
+    res.status(400).json({ error: "Invalid ID!" });
+    return;
   }
 
   const deletedRecord = await executeQuery(
@@ -84,8 +83,8 @@ router.delete("/:id", async (req, res) => {
   );
 
   if (deletedRecord.length == 0) {
-    res.status(400);
-    res.json({ error: "This id does not exist!" });
+    res.status(400).json({ error: "This id does not exist!" });
+    return;
   }
 
   await executeQuery("DELETE FROM users WHERE id = $1", [id]);
